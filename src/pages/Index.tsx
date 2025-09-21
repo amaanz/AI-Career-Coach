@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { FileUpload } from '@/components/FileUpload';
 import { RoleSelector } from '@/components/RoleSelector';
 import { ScoreResults } from '@/components/ScoreResults';
-import { BarChart3, Zap, Shield, ArrowRight } from 'lucide-react';
+import { BarChart3, Zap, Shield, ArrowRight, User, LogIn } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 import heroImage from '@/assets/hero-image.jpg';
 
 const Index = () => {
@@ -14,6 +16,8 @@ const Index = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState<any>(null);
   const { toast } = useToast();
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
 
   const handleAnalyze = async () => {
     if (!selectedFile || !selectedRole) {
@@ -95,6 +99,34 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background">
+      {/* Navigation */}
+      <nav className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
+              AI CV Screener
+            </h2>
+            <div className="flex items-center space-x-2">
+              {loading ? (
+                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              ) : user ? (
+                <>
+                  <Button variant="ghost" onClick={() => navigate('/profile')}>
+                    <User className="w-4 h-4 mr-2" />
+                    Profile
+                  </Button>
+                </>
+              ) : (
+                <Button variant="ghost" onClick={() => navigate('/auth')}>
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Sign In
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="container mx-auto px-4 py-16">
