@@ -104,7 +104,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-              AI CV Screener
+              CV Align
             </h2>
             <div className="flex items-center space-x-2">
               {loading ? (
